@@ -20,6 +20,8 @@ public:
 private slots:
   void on_pushButton_start_clicked();
 
+  void on_pushButton_drawError_clicked();
+
 private:
   Ui::MainWindow *ui;
 

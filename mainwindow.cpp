@@ -70,6 +70,7 @@ void MainWindow::on_pushButton_start_clicked()
     delete m_fR;
     delete m_dist;
     delete m_posR;
+
     Variable A(4),B(4);
     m_f = new Function(A,
                        Return(cos(A[2]),
@@ -383,7 +384,6 @@ Vector MainWindow::vEvoRK4R(Vector v, double dt, double du1, double du2)
   // r 
   r = v + (dt/6.)*(k1+2.*k2+2.*k3+k4);
   return r;
-
 }
 
 IntervalVector MainWindow::iPositionR(IntervalVector A, IntervalVector B)
@@ -406,3 +406,105 @@ Vector MainWindow::vPositionR(Vector A, Vector B)
 }
 
 
+
+void MainWindow::on_pushButton_drawError_clicked()
+{
+  tubeE->clear();
+  double dU1=ui->doubleSpinBox_uA->value();
+  double dU2=ui->doubleSpinBox_uB->value();
+
+  bool RK4 = ui->radioButton_RK4->isChecked();
+  bool euler = ui->radioButton_euler->isChecked();
+
+  {
+    delete m_f;
+    delete m_fR;
+    delete m_dist;
+    delete m_posR;
+
+    Variable A(4),B(4);
+    m_f = new Function(A,
+                       Return(cos(A[2]),
+                              sin(A[2]),
+                              A[3],
+                              Interval(0.0)));
+    m_fR = new Function(A,
+                        Return((Interval(-1)+cos(A[2])+dU1*A[1]),
+                               (sin(A[2])-dU1*A[0]),
+                               Interval(dU2-dU1)));
+    m_dist = new Function(A,B,
+                          sqrt(sqr(A[0]-B[0])+sqr(A[1]-B[1])));
+    m_posR = new Function(A,B,
+                          Return(cos(A[2])*(B[0]-A[0])+sin(A[2])*(B[1]-A[1]),
+                                 -sin(A[2])*(B[0]-A[0])+cos(A[2])*(B[1]-A[1]),
+                                 B[2]-A[2]));
+  }
+
+  IntervalVector iA(4), iB(4);
+  Vector vA(4), vB(4);
+  iA[0]=ui->doubleSpinBox_xA->value();
+  iA[1]=ui->doubleSpinBox_yA->value();
+  iA[2]=ui->doubleSpinBox_aA->value();
+  iA[3]=ui->doubleSpinBox_uA->value();
+  iB[0]=ui->doubleSpinBox_xB->value();
+  iB[1]=ui->doubleSpinBox_yB->value();
+  iB[2]=ui->doubleSpinBox_aB->value();
+  iB[3]=ui->doubleSpinBox_uB->value();
+  vA[0]=ui->doubleSpinBox_xA->value();
+  vA[1]=ui->doubleSpinBox_yA->value();
+  vA[2]=ui->doubleSpinBox_aA->value();
+  vA[3]=ui->doubleSpinBox_uA->value();
+  vB[0]=ui->doubleSpinBox_xB->value();
+  vB[1]=ui->doubleSpinBox_yB->value();
+  vB[2]=ui->doubleSpinBox_aB->value();
+  vB[3]=ui->doubleSpinBox_uB->value();
+
+  cout.precision(12);
+
+  IntervalVector iB_A(3), iB_R(3);
+  Vector vB_A(3), vB_R(3);
+  iB_A = iPositionR(iA,iB);
+  iB_R = iPositionR(iA,iB);
+  vB_A = vPositionR(vA,vB);
+  vB_R = vPositionR(vA,vB);
+
+  QVector<QwtIntervalSample> Err;
+  QVector<QPointF> Err_p;
+
+  double dtM=ui->doubleSpinBox_dt->value();
+  for(double dt = .0001; dt<dtM; dt+=0.0001)
+    {
+
+      if(euler){
+          iA = iEvoEuler(iA,dt);
+          vA = vEvoEuler(vA,dt);
+
+          iB = iEvoEuler(iB,dt);
+          vB = vEvoEuler(vB,dt);
+
+          iB_A = iEvoEulerR(iB_A,dt);
+          vB_A = vEvoEulerR(vB_A,dt,dU1,dU2);
+        }
+      if(RK4){
+          iA = iEvoRK4(iA,dt);
+          vA = vEvoRK4(vA,dt);
+
+          iB = iEvoRK4(iB,dt);
+          vB = vEvoRK4(vB,dt);
+
+          iB_A = iEvoRK4R(iB_A,dt);
+          vB_A = vEvoRK4R(vB_A,dt,dU1,dU2);
+        }
+
+      iB_R = iPositionR(iA,iB);
+      vB_R = vPositionR(vA,vB);
+
+      IntervalVector E(3);
+      E = iB_R-iB_A;
+      double vE = (vB_R-vB_A).norm()/dt;
+
+      Err.append(QwtIntervalSample(dt,QwtInterval(E[0].lb(),E[0].ub())));
+      Err_p.append(QPointF(dt,vE));
+    }
+  tubeE->insertCurve("Norm of errors",Err_p,Qt::black);
+}
