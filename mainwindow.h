@@ -23,7 +23,9 @@ private slots:
 private:
   Ui::MainWindow *ui;
 
-  TubeView *tubeX,*tubeY,*tubeA;
+  TubeView *tubeX,*tubeY,*tubeA,*tubeE;
+
+  ibex::Function *m_f,*m_fR,*m_dist,*m_posR;
 
   ibex::IntervalVector iEvoEuler(ibex::IntervalVector vI,double dt);
   ibex::IntervalVector iEvoRK4(ibex::IntervalVector vI,double dt);
@@ -35,7 +37,8 @@ private:
   ibex::Vector vEvoEulerR(ibex::Vector v, double dt, double du1, double du2);
   ibex::Vector vEvoRK4R(ibex::Vector v,double dt, double du1, double du2);
 
-  ibex::Vector positionR(ibex::Vector A,ibex::Vector B);
+  ibex::IntervalVector iPositionR(ibex::IntervalVector A,ibex::IntervalVector B);
+  ibex::Vector vPositionR(ibex::Vector A,ibex::Vector B);
 };
 
 #endif // MAINWINDOW_H

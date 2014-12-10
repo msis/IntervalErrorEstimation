@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>271</height>
+    <height>475</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -86,7 +86,7 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="label_totalTime">
          <property name="text">
           <string>Total Time</string>
          </property>
@@ -103,6 +103,184 @@
          <property name="value">
           <double>40.000000000000000</double>
          </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox_init">
+      <property name="title">
+       <string>Initial state</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox_iA">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="title">
+          <string>robot A</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_3">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_xA">
+            <property name="text">
+             <string>x[0]</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_xA">
+            <property name="minimum">
+             <double>-100.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>100.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_yA">
+            <property name="text">
+             <string>y[0]</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_yA">
+            <property name="minimum">
+             <double>-100.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>10.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_aA">
+            <property name="minimum">
+             <double>-6.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>6.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>1.740000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_uA">
+            <property name="minimum">
+             <double>-100.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>5.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_aA">
+            <property name="text">
+             <string>a[0]</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_uA">
+            <property name="text">
+             <string>u[0]</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="groupBox_iB">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="title">
+          <string>robot B</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_4">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_xB">
+            <property name="text">
+             <string>x[0]</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_xB">
+            <property name="minimum">
+             <double>-100.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>-15.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_yB">
+            <property name="minimum">
+             <double>-100.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>-5.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_aB">
+            <property name="minimum">
+             <double>-6.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>6.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>0.520000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_uB">
+            <property name="minimum">
+             <double>-100.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_yB">
+            <property name="text">
+             <string>y[0]</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_aB">
+            <property name="text">
+             <string>a[0]</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_uB">
+            <property name="text">
+             <string>u[0]</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
